@@ -7,7 +7,7 @@ import (
 	"io/ioutil"
 	"strings"
 )
-func code(arr []rune, dict map[string]string) string {
+func encode(arr []rune, dict map[string]string) string {
 	str := ""
 	for i:=0;i<len(arr);i++{
 		if smb:=dict[string(arr[i])];smb!=""{
@@ -98,7 +98,7 @@ func root(language string, fileName string, resultName string, reverse bool) {
 	if reverse {
 		str = decode(arr, dict)
 	} else {
-		str = code(arr, dict)
+		str = encode(arr, dict)
 	}
 	err := ioutil.WriteFile(resultName, []byte(str), 0644)// Unix permission bits
 	check(err)
@@ -108,12 +108,12 @@ func getVars() (string, string, string, string) {
 	language := getInfo("language","ua")
 	fileName := getInfo("FileName","input")
 	resultName := getInfo("Result FileName","output")
-	direction := getInfo("direction(either 'code' or 'decode')","decode")
+	direction := getInfo("direction(either 'encode' or 'decode')","decode")
 	return language, fileName, resultName, direction
 }
 func main() {
 	language, fileName, resultName, direction := getVars()
-	if direction == "code" {
+	if direction == "encode" {
 		root(language, fileName, resultName, false)
 	} else if direction == "decode" {
 		root(language, fileName, resultName, true)
