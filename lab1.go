@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"bufio"
+	"io/ioutil"
 )
 func code() {
 
@@ -21,13 +22,67 @@ func getInfo(st1,st2 string) string {
 		return language[:lng-1]
 	}
 }
-func main() {
+func check(e error) {
+    if e != nil {
+        panic(e)
+    }
+}
+func getData(file string)string{
+	dat, err := ioutil.ReadFile(file)
+	check(err)
+	return string(dat)
+}
+func getRunes(file string)[]rune{
+	str := getData(file)
+	return []rune(str)
+}
+func getWord(smb,str string, i int)(int, string){
+	word:=""
+	for pos:=i; pos<len(str); pos++{
+		if str[pos]==smb[0]{
+			return pos+1, word
+		} else {
+			word+=str[pos:pos+1]
+		}
+	}
+	return len(str)+1, word
+}
+func getDict(file string, reverse bool)map[string]string{
+	str, m, key, code := getData(file),make(map[string]string),"",""
+	for i:=0; i<len(str);{
+		i,key = getWord(" ",str,i)
+		i,code = getWord("\n",str,i)
+		if i >= len(str) {
+			return m
+		}
+		if reverse {
+			m[code] = key
+		} else {
+			m[key] = code
+		}
+	}
+	return m
+}
+func root(language string, fileName string, resultName string, reverse bool) {
+	arr := getRunes(fileName)
+	fmt.Println(arr)
+	dict := getDict(language, reverse)
+	fmt.Println(dict)
+}
+func getVars() (string, string, string, string) {
 	language := getInfo("language","ua")
-	fmt.Println(language)
-	fileName := getInfo("FileName","text")
-	fmt.Println(fileName)
+	fileName := getInfo("FileName","part1")
 	resultName := getInfo("Result FileName","output")
-	fmt.Println(resultName)
 	direction := getInfo("direction(either 'code' or 'decode')","decode")
-	fmt.Println(direction)
+	return language, fileName, resultName, direction
+}
+func main() {
+	language, fileName, resultName, direction := getVars()
+	if direction == "code" {
+		root(language, fileName, resultName, false)
+	} else if direction == "decode" {
+		root(language, fileName, resultName, true)
+	} else {
+		fmt.Println("wrong direction")
+	}
 }
