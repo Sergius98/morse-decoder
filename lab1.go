@@ -45,23 +45,27 @@ func getWord(smb,str string, i int)(int, string){
 			word+=str[pos:pos+1]
 		}
 	}
-	return len(str)+1, word
+	return len(str), word
+}
+func updateDictionary(code,key string, reverse bool, dict map[string]string) map[string]string{
+	if reverse {
+		dict[code] = key
+	} else {
+		dict[key] = code
+	}
+	return dict
 }
 func getDict(file string, reverse bool)map[string]string{
-	str, m, key, code := getData(file),make(map[string]string),"",""
+	str, dict, key, code := getData(file),make(map[string]string),"",""
 	for i:=0; i<len(str);{
 		i,key = getWord(" ",str,i)
 		i,code = getWord("\n",str,i)
 		if i >= len(str) {
-			return m
+			return dict
 		}
-		if reverse {
-			m[code] = key
-		} else {
-			m[key] = code
-		}
+		dict = updateDictionary(code, key, reverse, dict)
 	}
-	return m
+	return dict
 }
 func root(language string, fileName string, resultName string, reverse bool) {
 	arr := getRunes(fileName)
