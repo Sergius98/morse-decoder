@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"os"
-	"bufio"
+	//"os"
+	//"bufio"
 	"io/ioutil"
 	"strings"
 )
@@ -35,16 +35,16 @@ func decode(arr []rune, dict map[string]string) string {
 	}
 	return str
 }
-func getInfo(st1,st2 string) string {
-	var reader = bufio.NewReader(os.Stdin)
-	fmt.Print("input "+st1+"[default "+st2+"]:")
-	language,_:=reader.ReadString('\n')
-	if lng:=len(language); lng < 2 {
-		return st2
-	} else {
-		return language[:lng-1]
-	}
-}
+// func getInfo(st1,st2 string) string {
+// 	var reader = bufio.NewReader(os.Stdin)
+// 	fmt.Print("input "+st1+"[default "+st2+"]:")
+// 	language,_:=reader.ReadString('\n')
+// 	if lng:=len(language); lng < 2 {
+// 		return st2
+// 	} else {
+// 		return language[:lng-1]
+// 	}
+// }
 func check(e error) {
     if e != nil {
         panic(e)
@@ -104,20 +104,14 @@ func root(language string, fileName string, resultName string, reverse bool) {
 	check(err)
 	fmt.Println("program successfully finished")
 }
-func getVars() (string, string, string, string) {
-	language := getInfo("language","ua")
-	fileName := getInfo("FileName","input")
-	resultName := getInfo("Result FileName","output")
-	direction := getInfo("direction(either 'encode' or 'decode')","decode")
-	return language, fileName, resultName, direction
-}
-func main() {
-	language, fileName, resultName, direction := getVars()
-	if direction == "encode" {
-		root(language, fileName, resultName, false)
-	} else if direction == "decode" {
-		root(language, fileName, resultName, true)
-	} else {
-		fmt.Println("wrong direction")
-	}
+//func getVars() (string, string, string, string) {
+	// language := getInfo("language","ua")
+	// fileName := getInfo("FileName","input")
+	// resultName := getInfo("Result FileName","output")
+	// direction := getInfo("direction(either 'encode' or 'decode')","decode")
+	// return language, fileName, resultName, direction
+//}
+ func main() {
+ 	root("ua", "out1", "kke", false)
+
 }
