@@ -5,22 +5,17 @@ import (
 	"testing"
 )
 
-// func TestGetRunes(t *testing.T){
-// 	 fmt.Println(getRunes("get_vars"))
-// 	 fmt.Println((reflect.TypeOf(getRunes("get_vars"))))
-// 	 fmt.Println((reflect.TypeOf([]int32{45, 45, 32, 46,45}	)))
-// 	 fmt.Println([]int32{45, 45, 32, 46,45})
+ func TestGetRunes(t *testing.T){
 
-// 	 p1 := [5]rune(getRunes("get_vars"))
-// 	 p2 :=[5]rune{45, 45, 32, 46,45}
+	 p1 := []rune(getRunes("get_vars"))
+ 	 p2 := [5]rune{45, 45, 32, 46,45}
 
-// 	 if p1 != p2 {
-// 	 	fmt.Println("")
-// 	 }
-// 	// if getRunes("get_vars") != {
-// 	// 		fmt.Println("")
-// 	// }
-// }
+	 for i:=0;i<5;i++{
+ 	 	if p1[i] != p2[i] {
+			t.Error("problem with runes")
+ 	 	}
+	 }
+ }
 
 func TestGetDict(t *testing.T) {
 	p := getDict("short_ua",true)
@@ -59,18 +54,12 @@ func TestGetWord(t *testing.T){
 
 
 func TestFoo(t *testing.T) {
-    t.Run("A=1", func (t *testing.T){
- fmt.Println( decode(getRunes("input"),getDict("ua",true)))
-})
-    t.Run("A=2", func (t *testing.T){
- fmt.Printf( encode(getRunes("text"),getDict("ua",false)))
-})
-
-	t.Run("A=3", func (t *testing.T){
- 		if decode(getRunes("rtest")[0:22],getDict("ua",true)) != "маруся"{
- 			t.Error("Error decode Test")
- }
-})
+	t.Run("A=1", func (t *testing.T){
+		root("ua", "output", "input", false)
+	})
+  t.Run("A=2", func (t *testing.T){
+		root("ua", "input", "output", true)
+	})
 
 	t.Run("A=4", func (t *testing.T){
 		str:= encode(getRunes("out1"),getDict("ua",false))
@@ -79,6 +68,11 @@ func TestFoo(t *testing.T) {
  		 if str != "-- -.-- -.- --- .-.. .- "{
  			t.Error("True Decode Test crash")
  		}
-})
+	})
+		t.Run("A=3", func (t *testing.T){
+	 		if decode(getRunes("rtest")[0:22],getDict("ua",true)) != "маруся"{
+	 			t.Error("Error decode Test")
+	 		}
+		})
 
 }
