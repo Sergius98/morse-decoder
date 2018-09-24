@@ -54,20 +54,20 @@ func TestGetWord(t *testing.T){
 		if i >= len(str) {
 			break
 		}
-	}	
+	}
 }
 
 
 func TestFoo(t *testing.T) {
     t.Run("A=1", func (t *testing.T){
- fmt.Println( decode(getRunes("input"),getDict("ua",true)))
+ //fmt.Println( decode(getRunes("input"),getDict("ua",true)))
 })
     t.Run("A=2", func (t *testing.T){
- fmt.Printf( encode(getRunes("text"),getDict("ua",false)))
+ //fmt.Printf( encode(getRunes("text"),getDict("ua",false)))
 })
 
 	t.Run("A=3", func (t *testing.T){
- 		if decode(getRunes("rtest"),getDict("ua",true)) != "Маруся"{
+ 		if decode(getRunes("rtest")[0:22],getDict("ua",true)) != "маруся"{
  			t.Error("Error decode Test")
  }
 })
